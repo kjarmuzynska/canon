@@ -28,6 +28,8 @@ class TBoard(cocos.layer.Layer):
         self.sprites_list = dict()
         self.points = 0
         self.draw_initiation()
+        self.good_song = Sound("sounds/good.wav")
+        self.bad_song = Sound("sounds/bad.wav")
         
         
     
@@ -56,31 +58,13 @@ class TBoard(cocos.layer.Layer):
         pass
 
 
-
-        
-        
-        
-#    def egg_change_position(self, my_donut):
-#        donut = my_donut[0]
-#        donut.position = (100, 100)
-#        self.add(donut)
-        
-
-
     def onClicked(self):
-        
 
-        #print(self.sprites_list)
-        #print('clicked', self.posx, self.posy)
         hitted = self.DM.check_click(self.posx, self.posy)
         #print('hitted', hitted)
         if hitted:
             print('trafiono')
-            song = Sound("sounds/good.mp3")
-            #cocos.audio.pygame.mixer.music.load('sounds/good.mp3')
-            #pygame.mixer.music.load('sounds/good.mp3')
-            #pygame.mixer.music.play(2)
-            #pygame.mixer.music.load('bach.ogg')
+            self.good_song.play()
             center_x, center_y = hitted[1]
             dict_key = 'a(%s,%s)' %(center_x, center_y)
             print('gdzie', dict_key)
@@ -90,18 +74,8 @@ class TBoard(cocos.layer.Layer):
             self.draw_donut(hitted[0])
         else:
             print('pudlo')
-            
-#        #check if i got egg
-#        for egg in self.egg_basket:
-#            #self.egg_basket.remove(egg)
-#            if self.egg_hit(egg):
-#                print("TRAFIONY")
-#                self.egg_change_position(egg)
-#                self.points += 1
-#                print('my points', self.points)
-
+            self.bad_song.play()
                 
-    
     def on_mouse_press (self, x, y, buttons, modifiers):
         try:
             self.posx, self.posy = cocos.director.director.get_virtual_coordinates (x, y)
@@ -111,14 +85,12 @@ class TBoard(cocos.layer.Layer):
         except Exception as e:
             print(e)        
         
-
-   
-        
         
 class Board_Runner:
     def run(self):
         cocos.director.director.init(width=1300, height=700)
-
+        mixer.init()
+        
     	# We create a new layer, an instance of HelloWorld
     
         hello_layer = TBoard()
@@ -129,7 +101,7 @@ class Board_Runner:
     
     	# And now, start the application, starting with main_scene
         cocos.director.director.run(main_scene)
-        mixer.init()
+        
     
     	# or you could have written, without so many comments:
     #	  director.run( cocos.scene.Scene( HelloWorld() ) )
