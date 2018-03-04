@@ -47,8 +47,16 @@ class Donut_M:
         return point
     
     
-    def check_click(self, click_x, click_y):
-        for donut_coordinates in self.full_grid_list:
+    def check_click(self, click_x, click_y, running_sprites):
+#        for donut_coordinates in self.full_grid_list:
+#            if self.check_hit(click_x, click_y, donut_coordinates):
+#                new_point = self.change_donut_pos(donut_coordinates)
+#                where_it_was = donut_coordinates
+#                return [new_point, where_it_was]
+#        return 0
+        for spriteobj in running_sprites:
+            x, y = spriteobj.position
+            donut_coordinates = (x, y)
             if self.check_hit(click_x, click_y, donut_coordinates):
                 new_point = self.change_donut_pos(donut_coordinates)
                 where_it_was = donut_coordinates
