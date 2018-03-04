@@ -35,14 +35,14 @@ class Donut_M:
             
     def put_donut(self):
         point = random.choice(self.empty_grid_list)
-        self.empty_grid_list.remove(point)
+        #self.empty_grid_list.remove(point)
         self.full_grid_list += [point]
         return point
   
     
     def change_donut_pos(self, donut_coordinates):
         self.empty_grid_list += [donut_coordinates]
-        self.full_grid_list.remove(donut_coordinates)
+        #self.full_grid_list.remove(donut_coordinates)
         point = self.put_donut()
         return point
     
@@ -59,8 +59,8 @@ class Donut_M:
             donut_coordinates = (x, y)
             if self.check_hit(click_x, click_y, donut_coordinates):
                 new_point = self.change_donut_pos(donut_coordinates)
-                where_it_was = donut_coordinates
-                return [new_point, where_it_was]
+                #where_it_was = donut_coordinates
+                return [new_point, spriteobj]
         return 0
                 
      
