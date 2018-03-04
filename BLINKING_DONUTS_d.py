@@ -19,6 +19,7 @@ from donuts_mechanics import Donut_M
 #import pygame
 from cocos.audio.pygame.mixer import Sound
 from cocos.audio.pygame import mixer
+#from cocos.text.TextElement import Label
 #from cocos.actions.base_actions.IntervalAction import *
 #from window_designer import My_Window
 
@@ -33,16 +34,25 @@ class TBoard(cocos.layer.Layer):
         self.sprites_list = dict()
         self.points = 0
         self.running_sprites = []
+        self.label = self.update_score()
         self.draw_initiation()
         self.good_song = Sound("sounds/good.wav")
         self.bad_song = Sound("sounds/bad.wav")
+        #x = cocos.text.Label('Wynik: 0', (100, 650), color = (255, 255, 255, 255), font_size = 20)
+        #self.add(x, z=1)
         
         
-        self.add_gif()
+        #Label('whatever', (200, 200))
         #self.czarownica()
         #random_sprite = self.sprites_list[random.choice(list(self.sprites_list.keys()))]
         #print(random_sprite)                                
         #self.move_sprite(random_sprite)
+        
+    def update_score(self):
+        text = 'Wynik: %s' % (self.points)
+        x = cocos.text.Label(text , (100, 650), color = (255, 255, 255, 255), font_size = 20)
+        self.add(x, z=1)
+        return x
         
     def add_gif(self):
         path = 'images/source.gif' 
@@ -61,7 +71,8 @@ class TBoard(cocos.layer.Layer):
         #print(spriteobj)
         #self.DM.change_donut_pos
         #while True:
-        self.move_to_kill(spriteobj)
+        x, y = spriteobj.position
+        self.move_to_kill(spriteobj, x, y)
         #x, y = spriteobj.position
         #new_x, new_y = self.DM.change_donut_pos((x, y))
         #delta_x = new_x - x
@@ -169,9 +180,14 @@ class TBoard(cocos.layer.Layer):
             #self.draw_donut(hitted[0])
             #spriteobj.stop()
             #self.remove(hitted[1])
+            self.points += 1
+            print(self.points)
             new_donut = self.draw_donut(hitted[0])
             x, y = new_donut.position
-            self.moveby_sprite(hitted[1], x, y)
+            self.moveby_sprite(new_donut)#, x, y)#hitted[1], x, y)
+            print(self.label)
+            self.remove(self.label)
+            self.label = self.update_score()
             
             #self.move_to_kill(hitted[1])
         else:

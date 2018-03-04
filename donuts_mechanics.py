@@ -11,7 +11,7 @@ class Donut_M:
         self.egg_d = 200*0.05*4
         self.egg_r = self.egg_d/2
         self.donuts_grid()
-        self.donuts_number = 20
+        self.donuts_number = 10
         self.initial_position()
         self.to_draw = []
         
@@ -69,7 +69,7 @@ class Donut_M:
         donut_x, donut_y = donut_coordinates
         #print(donut_coordinates)
         #print((donut_x - click_x)**2 + (donut_y - click_y)**2, self.egg_r**2)
-        if ( donut_x - click_x)**2 + (donut_y - click_y)**2 <= self.egg_r**2:
+        if ( donut_x - click_x+20)**2 + (donut_y - click_y)**2 <= (self.egg_r+20)**2:
             
             return True
         else:
